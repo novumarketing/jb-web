@@ -84,6 +84,13 @@
   .hero-art img{border-radius:24px;box-shadow:0 30px 60px rgba(0,0,0,.35);border:5px solid rgba(255,255,255,.12);object-fit:cover;width:100%;height:420px}
   .hero-art .badge{position:absolute;bottom:-22px;left:-18px;background:#fff;color:var(--navy);border-radius:16px;padding:.85rem 1.1rem;box-shadow:var(--shadow);display:flex;align-items:center;gap:.7rem;font-weight:600;font-size:.9rem}
   .hero-art .badge i{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-2));display:grid;place-items:center;font-style:normal}
+  .hero-panel{height:420px;border-radius:24px;border:5px solid rgba(255,255,255,.12);background:linear-gradient(150deg,rgba(255,255,255,.10),rgba(255,255,255,.03));box-shadow:0 30px 60px rgba(0,0,0,.35);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;text-align:center;padding:2rem;position:relative;overflow:hidden}
+  .hero-panel:before{content:"";position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(244,169,31,.35),transparent 65%);top:-60px;right:-40px}
+  .hp-mark{width:96px;height:96px;border-radius:24px;background:linear-gradient(135deg,var(--gold),var(--gold-2));color:#3a2600;display:grid;place-items:center;font-family:'Poppins';font-weight:800;font-size:2.6rem;box-shadow:0 14px 30px rgba(244,169,31,.4);position:relative}
+  .hp-title{font-family:'Poppins';font-weight:700;font-size:1.45rem;color:#fff;margin-top:.6rem;position:relative}
+  .hp-sub{color:#cfe0f2;font-size:.9rem;position:relative}
+  .hp-row{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;margin-top:1rem;position:relative}
+  .hp-row span{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);padding:.4rem .8rem;border-radius:999px;font-size:.82rem;color:#fff}
   @media(max-width:900px){.hero .wrap{grid-template-columns:1fr;padding:3rem 22px 3.4rem}.hero h1{font-size:2.2rem}.hero-art{display:none}}
 
   section{padding:4.6rem 0}
@@ -199,7 +206,14 @@
       </div>
     </div>
     <div class="hero-art">
-      <img src="https://0201.nccdn.net/1_2/000/000/0dd/e30/pic-1.jpg" alt="Estudiantes felices del Colegio Jorge Berganza" loading="lazy" />
+      <div class="hero-panel">
+        <div class="hp-mark">JB</div>
+        <div class="hp-title">Colegio Jorge Berganza</div>
+        <div class="hp-sub">#EducaciónConValores · Tulancingo</div>
+        <div class="hp-row">
+          <span>🧸 Preescolar</span><span>📚 Primaria</span><span>🔬 Secundaria</span>
+        </div>
+      </div>
       <div class="badge"><i>★</i> Ambiente seguro y cálido</div>
     </div>
   </div>

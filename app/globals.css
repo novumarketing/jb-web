@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --royal: #1e3a8f;
+  --royal-2: #15296b;
+  --gold: #d6a93b;
+  --gold-ink: #8a6516;
+  --ink: #2b1f22;
+  --muted: #6e5f62;
+  --line: #ece2dd;
+}
+* { -webkit-font-smoothing: antialiased; }
+html { scroll-behavior: smooth; }
+body { color: var(--ink); background: #fffdfb; }
+
+@layer components {
+  .wrap { @apply mx-auto w-full max-w-6xl px-6; }
+  .grad-text {
+    background: linear-gradient(100deg, var(--royal), var(--gold));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-sans font-semibold;
+    @apply px-6 py-3 text-sm;
+    @apply transition duration-200 hover:opacity-90;
+  }
+  .btn-primary { background: linear-gradient(120deg, var(--royal), var(--royal-2)); @apply text-white shadow-[0_10px_26px_rgba(30,58,143,.30)] hover:-translate-y-0.5; }
+  .btn-gold { background: linear-gradient(120deg, #d3ac63, var(--gold)); @apply text-royal-2 shadow-[0_10px_26px_rgba(198,154,78,.35)] hover:-translate-y-0.5; }
+  .btn-ghost { @apply bg-white text-royal border-[1.5px] border-line hover:border-royal; }
+  .kicker { @apply font-sans font-semibold text-[12.5px] tracking-[0.22em] uppercase text-gold; }
+  .kicker-ink { @apply font-sans font-semibold text-[12.5px] tracking-[0.22em] uppercase; color: var(--gold-ink); }
+}
+
+@keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.animate-floaty { animation: floaty 5s ease-in-out infinite; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+.fade-up { animation: fadeUp .7s ease both; }
+.fade-up-1 { animation: fadeUp .7s ease .1s both; }
+.fade-up-2 { animation: fadeUp .7s ease .2s both; }
+.fade-up-3 { animation: fadeUp .7s ease .3s both; }
+
+@layer base {
+  a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex="0"]:focus-visible {
+    @apply rounded-md outline-none ring-2 ring-royal ring-offset-2 ring-offset-white;
+  }
+}
+
+@media (max-width: 1023px) { body { padding-bottom: 76px; } }

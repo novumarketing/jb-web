@@ -1,49 +1,46 @@
 import type { Metadata } from "next";
-import { PageHero, SectionHead } from "@/components/ui";
-import { PHONE, PHONE2, EMAIL, ADDRESS, WA } from "@/components/site";
+import Icon from "@/components/Icon";
+import Reveal from "@/components/Reveal";
 import ContactForm from "@/components/ContactForm";
-import LazyMap from "@/components/LazyMap";
-import { MapPin, Phone, Mail, MessageCircle, type LucideIcon } from "lucide-react";
+import { PageHero } from "@/components/ui";
+import { WA_INFORMES, PHONE, PHONE2, PHONE_HREF, EMAIL, ADDRESS, MAPS } from "@/components/site";
 
 export const metadata: Metadata = {
   title: "Contacto",
-  description: "Contacta al Colegio Jorge Berganza en Tulancingo. Teléfonos, ubicación, WhatsApp y formulario de informes.",
+  description: "Solicita informes o agenda una visita al Colegio Jorge Berganza en Tulancingo. Te respondemos el mismo día.",
 };
-
-function Info({ icon: Icon, title, children }: { icon: LucideIcon; title: string; children: React.ReactNode }) {
-  return (
-    <div className="mb-5 flex items-start gap-4">
-      <div className="grid h-11 w-11 flex-none place-items-center rounded-[13px] bg-royal-soft"><Icon className="h-5 w-5 text-royal" strokeWidth={1.75} aria-hidden /></div>
-      <div><b className="block font-display text-[15px] text-royal">{title}</b><p className="text-[14.5px] text-muted">{children}</p></div>
-    </div>
-  );
-}
 
 export default function Contacto() {
   return (
     <main>
-      <PageHero kicker="Contacto" title={<>Estamos para <span className="grad-text">ayudarte</span></>}
-        sub="Déjanos tus datos y con gusto te contactamos para resolver todas tus dudas." />
+      <PageHero
+        eyebrow="Contacto"
+        title={<>Estamos para <span className="serif-green">ayudarte</span></>}
+        sub="Solicita informes o agenda una visita por nuestras instalaciones. Te respondemos el mismo día."
+      />
 
-      <section className="py-20 md:py-24">
-        <div className="wrap grid items-start gap-12 md:grid-cols-[1fr_1.1fr]">
-          <div>
-            <SectionHead kicker="Datos de contacto" title="Visítanos en Tulancingo" />
-            <Info icon={MapPin} title="Dirección">{ADDRESS}</Info>
-            <Info icon={Phone} title="Teléfonos">{PHONE} · {PHONE2}</Info>
-            <Info icon={Mail} title="Correo">{EMAIL}</Info>
-            <Info icon={MessageCircle} title="WhatsApp">Respuesta inmediata en horario escolar</Info>
-            <a href={WA} target="_blank" rel="noopener noreferrer" className="btn btn-primary mt-2">Escribir por WhatsApp</a>
-          </div>
+      <section className="wrap two-col" style={{ paddingTop: "clamp(36px,5vw,64px)", paddingBottom: "clamp(56px,8vw,100px)", display: "grid", gridTemplateColumns: "1fr 1.1fr", gap: "clamp(32px,5vw,56px)" }}>
+        <Reveal style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          <a href={WA_INFORMES} target="_blank" rel="noopener noreferrer" style={{ background: "var(--ink)", borderRadius: 20, padding: 26, display: "flex", gap: 16, alignItems: "center", textDecoration: "none" }}>
+            <span style={{ flex: "none", width: 50, height: 50, borderRadius: 14, background: "var(--wa)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="MessageCircle" size={24} /></span>
+            <div><div style={{ color: "#fff", fontWeight: 700, fontSize: 17 }}>WhatsApp</div><div style={{ color: "#aab6c8", fontSize: 14 }}>Respuesta el mismo día · 771 396 4832</div></div>
+          </a>
+          <a href={PHONE_HREF} style={{ background: "var(--surface)", border: "1px solid var(--bd)", borderRadius: 20, padding: 26, display: "flex", gap: 16, alignItems: "center", textDecoration: "none" }}>
+            <span style={{ flex: "none", width: 50, height: 50, borderRadius: 14, background: "var(--blue-50)", color: "var(--blue-d)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="Phone" size={23} /></span>
+            <div><div style={{ color: "var(--ink)", fontWeight: 700, fontSize: 17 }}>Teléfono</div><div style={{ color: "var(--ink-600)", fontSize: 15 }}>{PHONE} · {PHONE2}</div></div>
+          </a>
+          <a href={`mailto:${EMAIL}`} style={{ background: "var(--surface)", border: "1px solid var(--bd)", borderRadius: 20, padding: 26, display: "flex", gap: 16, alignItems: "center", textDecoration: "none" }}>
+            <span style={{ flex: "none", width: 50, height: 50, borderRadius: 14, background: "var(--blue-50)", color: "var(--blue-d)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="Mail" size={22} /></span>
+            <div><div style={{ color: "var(--ink)", fontWeight: 700, fontSize: 17 }}>Correo</div><div style={{ color: "var(--ink-600)", fontSize: 15 }}>{EMAIL}</div></div>
+          </a>
+          <a href={MAPS} target="_blank" rel="noopener noreferrer" style={{ background: "var(--surface)", border: "1px solid var(--bd)", borderRadius: 20, padding: 26, display: "flex", gap: 16, alignItems: "flex-start", textDecoration: "none" }}>
+            <span style={{ flex: "none", width: 50, height: 50, borderRadius: 14, background: "var(--blue-50)", color: "var(--blue-d)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="MapPin" size={22} /></span>
+            <div><div style={{ color: "var(--ink)", fontWeight: 700, fontSize: 17 }}>Dirección</div><div style={{ color: "var(--ink-600)", fontSize: 15 }}>{ADDRESS}</div></div>
+          </a>
+        </Reveal>
+        <Reveal>
           <ContactForm />
-        </div>
-      </section>
-
-      <section className="pb-20 md:pb-24">
-        <div className="wrap">
-          <SectionHead center kicker="Ubicación" title="Encuéntranos en Tulancingo" />
-          <LazyMap />
-        </div>
+        </Reveal>
       </section>
     </main>
   );

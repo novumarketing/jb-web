@@ -1,2 +1,2 @@
 # Colegio Jorge Berganza
-Sitio web desarrollado por NOVU.
+Sitio web desarrollado por NOVU. 

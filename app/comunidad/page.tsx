@@ -1,82 +1,68 @@
 import type { Metadata } from "next";
-import { PageHero, SectionHead, CtaBand } from "@/components/ui";
-import { WA_VISITA } from "@/components/site";
-import { Music, Palette, Dumbbell, Utensils, Star, Camera, Heart, Users } from "lucide-react";
+import Icon from "@/components/Icon";
+import Reveal from "@/components/Reveal";
+import { PageHero, SectionHead, CtaBand, Photo } from "@/components/ui";
+import { PROGRAMAS, TESTIMONIOS, GALERIA } from "@/components/site";
 
 export const metadata: Metadata = {
   title: "Comunidad",
-  description: "Testimonios, vida estudiantil, talleres, deporte y servicios del Colegio Jorge Berganza en Tulancingo.",
+  description: "Talleres, deporte, arte, música y vida estudiantil en el Colegio Jorge Berganza. Conoce la experiencia de las familias de nuestra comunidad.",
 };
-
-const actividades = [
-  { icon: Palette, t: "Arte y talleres" },
-  { icon: Music, t: "Música" },
-  { icon: Dumbbell, t: "Deporte" },
-  { icon: Utensils, t: "Servicio de alimentos" },
-];
-const testimonios = [
-  { quote: "Mi esposo y yo estamos muy contentos con el desempeño de nuestro hijo. Las maestras están capacitadas; mi hijo ha cambiado mucho y está mucho más feliz.", role: "Mamá de 1º de Secundaria" },
-  { quote: "Disfrutamos mucho esos momentos que quedan en la memoria de nuestros pequeños. Agradezco a las maestras el enorme esfuerzo por mantener la sonrisa de los niños.", role: "Mamá de 2º de Primaria" },
-  { quote: "Me gustó mucho mi primera experiencia en algo así. Gracias Miss por las atenciones y por cuidar de mi bebé.", role: "Mamá de 2º de Preescolar" },
-];
 
 export default function Comunidad() {
   return (
     <main>
-      <PageHero kicker="Comunidad" title={<>Lo que dicen <span className="grad-text">nuestras familias</span></>}
-        sub="Padres y madres que ya forman parte de la comunidad Jorge Berganza comparten su experiencia." />
+      <PageHero
+        eyebrow="Comunidad JB"
+        title={<>Vida estudiantil que <span className="serif-green">deja huella</span></>}
+        sub="Talleres, deporte, arte y convivencia que complementan la formación y crean momentos que quedan en la memoria de nuestros pequeños."
+      />
 
-      <section className="py-20 md:py-24">
-        <div className="wrap">
-          <div className="grid gap-6 md:grid-cols-3">
-            {testimonios.map((t, i) => (
-              <div key={i} className="rounded-xl2 border border-line bg-white p-7 shadow-soft">
-                <div className="mb-3 flex gap-0.5 text-gold">
-                  {[0,1,2,3,4].map((s) => (<Star key={s} className="h-4 w-4 fill-gold" aria-hidden />))}
-                </div>
-                <p className="font-display text-[16px] leading-relaxed text-ink">“{t.quote}”</p>
-                <div className="mt-4 text-[13.5px] font-semibold text-royal">— {t.role}</div>
-              </div>
+      {/* Programas / actividades */}
+      <section className="wrap" style={{ paddingTop: "clamp(40px,6vw,72px)", paddingBottom: "clamp(40px,6vw,72px)" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 24 }}>
+          {PROGRAMAS.map((p, i) => (
+            <Reveal key={p.title} className="card card-hover">
+              <div className={i % 2 ? "icon-chip-green" : "icon-chip"}><Icon name={p.icon as any} size={28} /></div>
+              <h3 className="h3" style={{ fontSize: 20, marginTop: 18 }}>{p.title}</h3>
+              <p style={{ color: "var(--ink-600)", marginTop: 8, fontSize: 15 }}>{p.desc}</p>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* Galería */}
+      <section className="band-bg2">
+        <div className="wrap" style={{ paddingTop: "clamp(44px,6vw,80px)", paddingBottom: "clamp(44px,6vw,80px)" }}>
+          <SectionHead center eyebrow="Galería" title="Momentos de nuestra comunidad" />
+          <div className="gallery-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16, marginTop: 40 }}>
+            {GALERIA.map((g, i) => (
+              <Reveal key={g.label} className={g.span ? "span2" : ""} style={{ gridColumn: g.span ? "span 2" : "auto", boxShadow: "0 2px 8px rgba(20,33,61,.06)", borderRadius: 20 }}>
+                <Photo src={g.img} alt={g.label} radius={20} ratio="4/3" icon={["Camera","Baby","Pencil","Users","Palette","Heart"][i % 6] as any} />
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-bg-2 py-20 md:py-24">
-        <div className="wrap">
-          <SectionHead center kicker="Vida estudiantil" title="Aprender, crear y convivir" sub="Actividades y servicios que forman al alumno por completo." />
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {actividades.map((a) => {
-              const Icon = a.icon;
-              return (
-                <div key={a.t} className="rounded-xl2 border border-line bg-white p-7 text-center">
-                  <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-[15px] bg-gradient-to-br from-royal to-royal-2 text-white"><Icon className="h-7 w-7" strokeWidth={1.75} aria-hidden /></div>
-                  <h3 className="font-display text-[16px] font-semibold text-royal">{a.t}</h3>
-                </div>
-              );
-            })}
-          </div>
+      {/* Testimonios */}
+      <section className="wrap section">
+        <SectionHead center eyebrow="Testimonios" title="Lo que dicen nuestras familias" sub="Padres y madres que ya forman parte de la comunidad Jorge Berganza comparten su experiencia." />
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: 24, marginTop: 44 }}>
+          {TESTIMONIOS.map((t) => (
+            <Reveal key={t.role} className="card">
+              <div style={{ color: "var(--gold)", fontSize: 18, letterSpacing: 2 }}>★★★★★</div>
+              <p style={{ fontFamily: "var(--font-spectral), Georgia, serif", fontStyle: "italic", color: "var(--ink-700)", fontSize: 16.5, lineHeight: 1.5, marginTop: 12 }}>{t.text}</p>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 18 }}>
+                <div style={{ width: 44, height: 44, borderRadius: "50%", background: "var(--blue-50)", color: "var(--blue-d)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontFamily: "var(--font-display)", fontSize: 14 }}>{t.ini}</div>
+                <div style={{ color: "var(--ink-600)", fontSize: 14, fontWeight: 600 }}>{t.role}</div>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </section>
 
-      <section className="py-20 md:py-24">
-        <div className="wrap grid items-center gap-10 md:grid-cols-2">
-          <div>
-            <SectionHead kicker="Nuestra familia JB" title="Una comunidad que acompaña" />
-            <p className="text-[16px] text-muted">Más que una escuela, somos una familia educativa con tradición en Tulancingo. Acompañamos a cada alumno y a cada familia con cariño, cuidado y un ambiente cálido en cada etapa.</p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[13.5px] font-medium text-royal ring-1 ring-line"><Heart className="h-4 w-4 text-gold" aria-hidden /> Cariño y cuidado</span>
-              <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[13.5px] font-medium text-royal ring-1 ring-line"><Users className="h-4 w-4 text-gold" aria-hidden /> Comunidad</span>
-              <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[13.5px] font-medium text-royal ring-1 ring-line"><Camera className="h-4 w-4 text-gold" aria-hidden /> Momentos memorables</span>
-            </div>
-          </div>
-          <div className="relative h-[280px] overflow-hidden rounded-3xl bg-gradient-to-br from-royal to-royal-2 shadow-soft">
-            <div className="grid h-full place-items-center text-center font-display text-3xl font-bold text-gold">#EducaciónConValores</div>
-          </div>
-        </div>
-      </section>
-
-      <CtaBand title="Vive la comunidad Jorge Berganza" sub="Agenda una visita y siente el ambiente que hace de JB una familia." href={WA_VISITA} label="Agendar una visita" />
+      <CtaBand title="Ven y siente el ambiente JB" sub="Agenda una visita y conoce por qué somos una familia educativa con tradición en Tulancingo." variant="blue" primary="recorrido" />
     </main>
   );
 }

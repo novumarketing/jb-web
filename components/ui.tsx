@@ -1,57 +1,76 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
+import Reveal from "./Reveal";
+import Icon from "./Icon";
+import type { IconName } from "./Icon";
+import { WA_INFORMES, WA_RECORRIDO } from "./site";
 
-export function SectionHead({ kicker, title, sub, center, light }:
-  { kicker: string; title: string; sub?: string; center?: boolean; light?: boolean }) {
+export function PageHero({ eyebrow, title, sub }: { eyebrow: string; title: ReactNode; sub: string }) {
   return (
-    <div className={`mb-12 max-w-2xl ${center ? "mx-auto text-center" : ""}`}>
-      <span className={light ? "kicker" : "kicker-ink"}>{kicker}</span>
-      <h2 className={`mt-3.5 font-display text-[clamp(28px,3.6vw,42px)] font-bold ${light ? "text-white" : "text-royal"}`}>{title}</h2>
-      {sub && <p className={`mt-3.5 text-[17px] ${light ? "text-[#cdd9ef]" : "text-muted"}`}>{sub}</p>}
-    </div>
-  );
-}
-
-export function PageHero({ kicker, title, sub }: { kicker: string; title: ReactNode; sub: string }) {
-  return (
-    <section className="relative overflow-hidden border-b border-line bg-gradient-to-b from-bg-2 to-white">
-      <div className="pointer-events-none absolute -right-32 -top-40 h-[420px] w-[420px] rounded-full bg-[#cfe0fb] opacity-50 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-44 -left-32 h-[360px] w-[360px] rounded-full bg-[#f4ecdd] opacity-60 blur-3xl" />
-      <div className="wrap relative z-10 py-16 text-center md:py-20">
-        <span className="kicker-ink">{kicker}</span>
-        <h1 className="mx-auto mt-4 max-w-3xl font-display text-[clamp(32px,4.6vw,52px)] font-extrabold leading-[1.1] text-royal">{title}</h1>
-        <p className="mx-auto mt-5 max-w-2xl text-lg text-muted">{sub}</p>
+    <section style={{ background: "radial-gradient(1000px 480px at 80% -20%,rgba(30,58,143,.12),transparent 60%),radial-gradient(700px 380px at 0% 120%,rgba(214,169,59,.10),transparent 55%),var(--bg)" }}>
+      <div className="wrap" style={{ paddingTop: "clamp(44px,6vw,80px)", paddingBottom: "clamp(28px,4vw,48px)" }}>
+        <Reveal style={{ maxWidth: 760 }}>
+          <div className="eyebrow">{eyebrow}</div>
+          <h1 className="h1" style={{ marginTop: 14 }}>{title}</h1>
+          <p className="lead" style={{ marginTop: 18, maxWidth: 620 }}>{sub}</p>
+        </Reveal>
       </div>
     </section>
   );
 }
 
-export function StatsBar({ items }: { items: { n: string; l: string }[] }) {
+export function SectionHead({ eyebrow, title, sub, center, light }: { eyebrow: string; title: string; sub?: string; center?: boolean; light?: boolean }) {
   return (
-    <section className="bg-royal">
-      <div className="wrap grid grid-cols-2 gap-6 py-10 text-center md:grid-cols-4">
-        {items.map((s) => (
-          <div key={s.l}>
-            <div className="bg-gradient-to-r from-[#cfe0fb] to-gold bg-clip-text font-display text-[40px] font-extrabold text-transparent">{s.n}</div>
-            <div className="mt-1 text-[13.5px] text-[#cdd9ef]">{s.l}</div>
-          </div>
-        ))}
-      </div>
-    </section>
+    <Reveal style={{ maxWidth: center ? 760 : 680, marginLeft: center ? "auto" : undefined, marginRight: center ? "auto" : undefined, textAlign: center ? "center" : "left" }}>
+      <div className={light ? "eyebrow-light" : "eyebrow"}>{eyebrow}</div>
+      <h2 className="h2" style={{ marginTop: 12, color: light ? "#fff" : undefined }}>{title}</h2>
+      {sub && <p style={{ marginTop: 16, fontSize: 18, color: light ? "#cfe0f2" : "var(--ink-600)" }}>{sub}</p>}
+    </Reveal>
   );
 }
 
-export function CtaBand({ title, sub, href, label }: { title: string; sub: string; href: string; label: string }) {
+export function CtaBand({ title, sub, variant = "ink", primary = "informes", showSecondary = true }: { title: string; sub: string; variant?: "ink" | "blue"; primary?: "informes" | "recorrido"; showSecondary?: boolean }) {
+  const bg = variant === "ink"
+    ? "linear-gradient(120deg,var(--ink),var(--blue-d))"
+    : "linear-gradient(120deg,var(--blue),var(--blue-dd))";
   return (
-    <section className="py-20">
-      <div className="wrap">
-        <div className="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-royal to-royal-2 px-8 py-16 text-center">
-          <div className="pointer-events-none absolute -right-16 -top-28 h-80 w-80 rounded-full bg-gold/25 blur-3xl" />
-          <h2 className="relative font-display text-[clamp(27px,3.8vw,38px)] font-bold text-white">{title}</h2>
-          <p className="relative mx-auto mt-3.5 max-w-xl text-[17px] text-[#cdd9ef]">{sub}</p>
-          <div className="relative mt-7"><a href={href} target="_blank" rel="noopener noreferrer" className="btn btn-gold">{label}</a></div>
+    <section style={{ background: bg }}>
+      <Reveal style={{ maxWidth: 900, margin: "0 auto", padding: "clamp(48px,7vw,100px) clamp(20px,4vw,48px)", textAlign: "center" }}>
+        <h2 className="h2" style={{ color: "#fff", fontSize: "clamp(28px,4vw,48px)" }}>{title}</h2>
+        <p style={{ color: "#cfe0f2", fontSize: 18, margin: "16px auto 0", maxWidth: 560 }}>{sub}</p>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 14, justifyContent: "center", marginTop: 32 }}>
+          <a href={primary === "informes" ? WA_INFORMES : WA_RECORRIDO} target="_blank" rel="noopener noreferrer" className="btn btn-white">
+            {primary === "informes" ? "Solicitar informes" : "Agendar visita"}
+          </a>
+          {showSecondary && (
+            <a href={primary === "informes" ? WA_RECORRIDO : WA_INFORMES} target="_blank" rel="noopener noreferrer" className="btn btn-outline-light">
+              {primary === "informes" ? "Agendar visita" : "Solicitar informes"}
+            </a>
+          )}
         </div>
-      </div>
+      </Reveal>
     </section>
+  );
+}
+
+/* Photo: usa imagen real si hay src; si no, placeholder elegante royal+dorado */
+export function Photo({ src, alt, radius = 24, ratio = "4/5", icon = "Sparkles" }: { src?: string; alt: string; radius?: number; ratio?: string; icon?: IconName }) {
+  if (src) {
+    return (
+      <div style={{ borderRadius: radius, overflow: "hidden", aspectRatio: ratio, background: "var(--bg2)" }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={src} alt={alt} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+      </div>
+    );
+  }
+  return (
+    <div style={{ borderRadius: radius, overflow: "hidden", aspectRatio: ratio, position: "relative", background: "linear-gradient(135deg,var(--blue) 0%,var(--blue-dd) 100%)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div style={{ position: "absolute", inset: 0, background: "radial-gradient(420px 260px at 75% 15%,rgba(214,169,59,.28),transparent 60%)" }} />
+      <div style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "center", gap: 12, color: "#fff", textAlign: "center", padding: 24 }}>
+        <span style={{ width: 64, height: 64, borderRadius: 18, background: "rgba(255,255,255,.12)", border: "1px solid rgba(214,169,59,.5)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--gold)" }}>
+          <Icon name={icon} size={30} />
+        </span>
+        <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 18 }}>{alt}</span>
+      </div>
+    </div>
   );
 }

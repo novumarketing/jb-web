@@ -1,47 +1,83 @@
 "use client";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { NAV, WA } from "./site";
+import Icon from "./Icon";
+import { NAV, PHONE, PHONE_HREF, EMAIL, WA_INFORMES } from "./site";
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
-  const path = usePathname();
+  const pathname = usePathname();
+  const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
+
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-white/90 backdrop-blur-md">
-      <div className="wrap flex h-[76px] items-center justify-between">
-        <Link href="/" className="flex items-center gap-3">
-          <div className="grid h-12 w-12 place-items-center rounded-full bg-gradient-to-br from-royal to-royal-2 font-display text-xl font-bold text-white shadow-[0_6px_18px_rgba(30,58,143,.35)]">JB</div>
-          <div className="leading-tight">
-            <b className="block font-display text-[18px] font-bold text-royal">Jorge Berganza</b>
-            <span className="text-[10.5px] uppercase tracking-[0.16em] text-muted">Colegio · Tulancingo</span>
+    <>
+      <div className="topbar" style={{ background: "var(--ink)", color: "#cfdbea", fontSize: 13 }}>
+        <div className="wrap" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, paddingTop: 9, paddingBottom: 9 }}>
+          <div style={{ display: "flex", gap: 22, alignItems: "center" }}>
+            <a href={PHONE_HREF} style={{ textDecoration: "none", color: "#cfdbea", display: "flex", alignItems: "center", gap: 7 }}>
+              <Icon name="Phone" size={14} style={{ color: "var(--gold)" }} />{PHONE}
+            </a>
+            <a href={`mailto:${EMAIL}`} style={{ textDecoration: "none", color: "#cfdbea", display: "flex", alignItems: "center", gap: 7 }}>
+              <Icon name="Mail" size={14} style={{ color: "var(--gold)" }} />{EMAIL}
+            </a>
           </div>
-        </Link>
-        <nav className="hidden items-center gap-6 lg:flex">
-          {NAV.map((n) => {
-            const active = path === n.href;
-            return (
-              <Link key={n.href} href={n.href} className={`text-[14.5px] font-medium transition hover:text-royal ${active ? "text-royal" : "text-ink"}`}>
+          <span style={{ display: "flex", alignItems: "center", gap: 7 }}>
+            <Icon name="MapPin" size={14} style={{ color: "var(--gold)" }} />Tulancingo, Hidalgo · Tradición e innovación
+          </span>
+        </div>
+      </div>
+
+      <header style={{ position: "sticky", top: 0, zIndex: 50, background: "rgba(255,255,255,.88)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", borderBottom: "1px solid var(--bd)" }}>
+        <div className="wrap" style={{ height: 76, display: "flex", alignItems: "center", gap: 24 }}>
+          <Link href="/" aria-label="Inicio" style={{ display: "flex", alignItems: "center" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo-jb.png" alt="Colegio Jorge Berganza" style={{ height: 54, width: "auto", display: "block" }} />
+          </Link>
+
+          <nav className="nav-desktop" style={{ marginLeft: "auto", display: "flex", gap: 4, alignItems: "center" }}>
+            {NAV.map((n) => {
+              const active = isActive(n.href);
+              return (
+                <Link key={n.href} href={n.href} style={{ background: active ? "var(--blue-50)" : "transparent", color: active ? "var(--blue-d)" : "var(--ink-700)", fontWeight: 600, fontSize: 15, padding: "9px 14px", borderRadius: 999, textDecoration: "none", transition: "all .18s" }}>
+                  {n.label}
+                </Link>
+              );
+            })}
+          </nav>
+
+          <a href={WA_INFORMES} target="_blank" rel="noopener noreferrer" className="nav-desktop btn btn-sm" style={{ background: "var(--blue)", color: "#fff", boxShadow: "0 10px 22px rgba(30,58,143,.26)" }}>
+            <Icon name="MessageCircle" size={16} />Solicitar informes
+          </a>
+
+          <button className="nav-burger" onClick={() => setOpen((v) => !v)} aria-label="Menú" style={{ marginLeft: "auto", background: "none", border: "1px solid var(--bd)", borderRadius: 12, width: 44, height: 44, alignItems: "center", justifyContent: "center", cursor: "pointer", color: "var(--ink)" }}>
+            <Icon name={open ? "X" : "Menu"} size={24} />
+          </button>
+        </div>
+
+        {open && (
+          <div className="nav-mobile-menu" style={{ borderTop: "1px solid var(--bd)", padding: "14px clamp(20px,4vw,48px)", display: "flex", flexDirection: "column", gap: 4, background: "#fff" }}>
+            {NAV.map((n) => (
+              <Link key={n.href} href={n.href} onClick={() => setOpen(false)} style={{ textAlign: "left", color: "var(--ink)", fontWeight: 600, fontSize: 17, padding: "13px 8px", borderRadius: 10, textDecoration: "none" }}>
                 {n.label}
               </Link>
-            );
-          })}
-          <a href={WA} target="_blank" rel="noopener noreferrer" className="btn btn-primary !px-5 !py-2.5">Informes</a>
-        </nav>
-        <button aria-label="Menú" aria-expanded={open} onClick={() => setOpen((v) => !v)} className="flex flex-col gap-[5px] lg:hidden">
-          <span className="h-[2.5px] w-6 rounded bg-royal" /><span className="h-[2.5px] w-6 rounded bg-royal" /><span className="h-[2.5px] w-6 rounded bg-royal" />
-        </button>
-      </div>
-      {open && (
-        <div className="border-t border-line bg-white px-6 py-4 lg:hidden">
-          <div className="flex flex-col gap-4">
-            {NAV.map((n) => (
-              <Link key={n.href} href={n.href} onClick={() => setOpen(false)} className={`font-medium ${path === n.href ? "text-royal" : "text-ink"}`}>{n.label}</Link>
             ))}
-            <a href={WA} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)} className="btn btn-primary">Informes</a>
+            <a href={WA_INFORMES} target="_blank" rel="noopener noreferrer" style={{ marginTop: 8, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: ".5em", background: "var(--blue)", color: "#fff", fontWeight: 700, fontSize: 16, padding: 14, borderRadius: 999, textDecoration: "none" }}>
+              Solicitar informes
+            </a>
           </div>
-        </div>
-      )}
-    </header>
+        )}
+      </header>
+
+      <style>{`
+        .nav-burger { display: none; }
+        @media (max-width: 880px) {
+          .topbar { display: none; }
+          .nav-desktop { display: none !important; }
+          .nav-burger { display: flex !important; }
+        }
+        @media (min-width: 881px) { .nav-mobile-menu { display: none !important; } }
+      `}</style>
+    </>
   );
 }

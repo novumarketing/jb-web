@@ -1,34 +1,51 @@
 "use client";
 import { useState } from "react";
+import Icon from "./Icon";
 
-const inputCls = "w-full rounded-[11px] border-[1.5px] border-line bg-[#fffdfb] px-3.5 py-3 text-[14.5px] text-ink outline-none transition focus:border-royal";
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return (<div className="mb-4"><label className="mb-1.5 block text-[13px] font-semibold text-royal">{label}</label>{children}</div>);
-}
 export default function ContactForm() {
-  const [sent, setSent] = useState(false);
+  const [nombre, setNombre] = useState("");
+  const [tel, setTel] = useState("");
+  const [email, setEmail] = useState("");
+  const [msg, setMsg] = useState("");
+
+  function submit(e: React.FormEvent) {
+    e.preventDefault();
+    const cuerpo =
+      `Hola, vi la web del Colegio Jorge Berganza y quiero solicitar informes y la lista de precios.` +
+      (nombre ? `\nNombre: ${nombre}` : "") +
+      (tel ? `\nTeléfono: ${tel}` : "") +
+      (email ? `\nCorreo: ${email}` : "") +
+      (msg ? `\nMensaje: ${msg}` : "");
+    const url = "https://wa.me/527713964832?text=" + encodeURIComponent(cuerpo);
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
+
   return (
-    <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className="rounded-xl2 border border-line bg-white p-7 shadow-soft">
-      {sent ? (
-        <div className="py-10 text-center">
-          <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-royal-soft text-2xl">✓</div>
-          <h3 className="font-display text-xl font-semibold text-royal">¡Gracias!</h3>
-          <p className="mt-2 text-[14.5px] text-muted">Recibimos tus datos. Un asesor de admisiones te contactará muy pronto.</p>
+    <form onSubmit={submit} style={{ background: "var(--surface)", border: "1px solid var(--bd)", borderRadius: 24, padding: "clamp(28px,4vw,40px)", boxShadow: "0 8px 30px rgba(12,39,51,.07)" }}>
+      <h2 className="h3" style={{ fontSize: 24 }}>Solicita informes</h2>
+      <p style={{ color: "var(--ink-600)", fontSize: 15, margin: "8px 0 22px" }}>Déjanos tus datos y te contactamos con la información y la lista de precios.</p>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+        <div>
+          <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "var(--ink-700)", marginBottom: 6 }}>Nombre del tutor</label>
+          <input value={nombre} onChange={(e) => setNombre(e.target.value)} placeholder="Tu nombre" className="fld" />
         </div>
-      ) : (
-        <>
-          <Field label="Nombre del padre o tutor"><input required type="text" placeholder="Tu nombre completo" className={inputCls} /></Field>
-          <div className="grid gap-0 sm:grid-cols-2 sm:gap-4">
-            <Field label="Teléfono"><input required type="tel" placeholder="10 dígitos" className={inputCls} /></Field>
-            <Field label="Correo electrónico"><input required type="email" placeholder="correo@ejemplo.com" className={inputCls} /></Field>
-          </div>
-          <Field label="Nivel de interés">
-            <select className={inputCls}><option>Preescolar</option><option>Primaria</option><option>Secundaria</option><option>Extra acad&eacute;micas</option></select>
-          </Field>
-          <Field label="Mensaje (opcional)"><textarea placeholder="Cuéntanos en qué podemos ayudarte" className={`${inputCls} min-h-[90px] resize-y`} /></Field>
-          <button type="submit" className="btn btn-primary mt-1.5 w-full">Solicitar informes</button>
-        </>
-      )}
+        <div>
+          <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "var(--ink-700)", marginBottom: 6 }}>Teléfono</label>
+          <input value={tel} onChange={(e) => setTel(e.target.value)} placeholder="Tu teléfono" className="fld" />
+        </div>
+      </div>
+      <div style={{ marginTop: 14 }}>
+        <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "var(--ink-700)", marginBottom: 6 }}>Correo electrónico</label>
+        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="tucorreo@ejemplo.com" className="fld" />
+      </div>
+      <div style={{ marginTop: 14 }}>
+        <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "var(--ink-700)", marginBottom: 6 }}>Mensaje</label>
+        <textarea value={msg} onChange={(e) => setMsg(e.target.value)} placeholder="Cuéntanos qué te gustaría saber" rows={4} className="fld" style={{ resize: "vertical" }} />
+      </div>
+      <button type="submit" style={{ marginTop: 18, width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: ".5em", background: "var(--blue)", color: "#fff", fontWeight: 700, fontSize: 16, padding: 15, borderRadius: 12, border: "none", cursor: "pointer" }}>
+        <Icon name="Send" size={18} />Enviar por WhatsApp
+      </button>
+      <div style={{ fontSize: 12, color: "var(--ink-500)", textAlign: "center", marginTop: 10 }}>Al enviar abrimos WhatsApp con tu mensaje listo para nuestro colegio.</div>
     </form>
   );
 }

@@ -1,110 +1,136 @@
 import Link from "next/link";
-import { SectionHead, StatsBar, CtaBand } from "@/components/ui";
-import { WA, WA_VISITA } from "@/components/site";
-import { Blocks, Pencil, FlaskConical, Palette, School, Rocket, Apple, Sparkles } from "lucide-react";
-
-const niveles = [
-  { icon: Blocks, t: "Preescolar", d: "Primeros pasos con cariño, juego y valores.", href: "/niveles#preescolar" },
-  { icon: Pencil, t: "Primaria", d: "Bases sólidas en lectura, matemáticas y convivencia.", href: "/niveles#primaria" },
-  { icon: FlaskConical, t: "Secundaria", d: "Pensamiento crítico, disciplina y acompañamiento.", href: "/niveles#secundaria" },
-  { icon: Palette, t: "Extra académicas", d: "Talleres, deporte y arte para un desarrollo integral.", href: "/niveles#extra" },
-];
-const pilares = [
-  { icon: School, t: "Ambiente adecuado", d: "Nuestros docentes ofrecen un ambiente seguro y cálido que propicia el aprendizaje en cada experiencia cotidiana." },
-  { icon: Rocket, t: "Innovación pedagógica", d: "Integramos elementos tecnológicos que permiten a cada estudiante aprender y crecer de forma competente y capaz." },
-  { icon: Apple, t: "Servicios adicionales", d: "Ofrecemos alimentos diariamente y actividades extra académicas. Pregunta por lo que más te interese." },
-];
+import Icon from "@/components/Icon";
+import Reveal from "@/components/Reveal";
+import Faq from "@/components/Faq";
+import { SectionHead, CtaBand, Photo } from "@/components/ui";
+import { WA_INFORMES, TRUST, STATS, PILLARS, NIVELES, TESTIMONIOS } from "@/components/site";
 
 export default function Home() {
+  const tst = TESTIMONIOS[0];
   return (
     <main>
-      <section className="relative overflow-hidden bg-gradient-to-b from-bg-2 to-white">
-        <div className="pointer-events-none absolute -right-32 -top-40 h-[460px] w-[460px] rounded-full bg-[#cfe0fb] opacity-60 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-40 -left-32 h-[380px] w-[380px] rounded-full bg-[#f6edd7] opacity-70 blur-3xl" />
-        <div className="wrap relative z-10 grid items-center gap-12 py-16 md:grid-cols-[1.08fr_.92fr] md:py-24">
+      {/* HERO */}
+      <section style={{ position: "relative", overflow: "hidden", background: "radial-gradient(1200px 600px at 80% -10%,rgba(30,58,143,.14),transparent 60%),radial-gradient(900px 520px at 0% 110%,rgba(214,169,59,.10),transparent 55%),var(--bg)" }}>
+        <div className="wrap hero-grid" style={{ paddingTop: "clamp(48px,7vw,96px)", paddingBottom: "clamp(48px,7vw,96px)", display: "grid", gridTemplateColumns: "1.05fr .95fr", gap: "clamp(32px,5vw,72px)", alignItems: "center" }}>
           <div>
-            <span className="fade-up inline-flex items-center gap-2 rounded-full bg-royal-soft px-4 py-2 text-[12.5px] font-semibold text-royal">
-              <span className="h-2 w-2 rounded-full bg-gold" /> Educación con valores · Preescolar a Secundaria
-            </span>
-            <h1 className="fade-up-1 mt-5 font-display text-[clamp(33px,5vw,54px)] font-extrabold leading-[1.06] text-royal">
-              Tradición e innovación para una <span className="grad-text">buena educación</span>
+            <Reveal style={{ display: "inline-flex", alignItems: "center", gap: 9, background: "#fff", border: "1px solid var(--bd)", padding: "7px 15px", borderRadius: 999, fontSize: 13, fontWeight: 600, color: "var(--ink-700)", boxShadow: "0 2px 10px rgba(20,33,61,.05)" }}>
+              <span className="dot-pulse" style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--gold)" }} />
+              Colegio en Tulancingo, Hidalgo · Inscripciones abiertas
+            </Reveal>
+            <h1 className="h1-hero" style={{ marginTop: 20 }}>
+              Tradición e innovación para una <span className="serif-green">buena educación</span>
             </h1>
-            <p className="fade-up-2 mt-5 max-w-xl text-lg text-muted">
-              En el Colegio Jorge Berganza valoramos la individualidad de cada niño y apoyamos su desarrollo intelectual, social y emocional en un ambiente seguro y cálido.
+            <p className="lead" style={{ maxWidth: 560, marginTop: 22 }}>
+              En el Colegio Jorge Berganza somos más que una escuela: una familia educativa con más de 20 años de tradición en Tulancingo, que acompaña a cada alumno con cariño y un ambiente seguro.
             </p>
-            <div className="fade-up-3 mt-8 flex flex-wrap gap-3.5">
-              <a href={WA} target="_blank" rel="noopener noreferrer" className="btn btn-primary">Solicitar informes</a>
-              <Link href="/niveles" className="btn btn-ghost">Conoce los niveles</Link>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 13, marginTop: 32 }}>
+              <a href={WA_INFORMES} target="_blank" rel="noopener noreferrer" className="btn btn-primary"><Icon name="FileText" size={19} />Solicitar informes</a>
+              <Link href="/niveles" className="btn btn-ghost">Conoce los niveles<Icon name="ArrowRight" size={18} /></Link>
             </div>
-            <div className="mt-9 flex flex-wrap gap-6">
-              {["Incorporado a la SEP", "+20 años formando", "Ambiente seguro"].map((t) => (
-                <div key={t} className="flex items-center gap-2.5 text-[13.5px] font-medium text-muted">
-                  <Sparkles className="h-4 w-4 text-gold" aria-hidden /> {t}
-                </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 20, marginTop: 30 }}>
+              {TRUST.map((t) => (
+                <span key={t.label} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14, fontWeight: 600, color: "var(--ink-700)" }}>
+                  <Icon name={t.icon as any} size={17} style={{ color: "var(--blue)" }} />{t.label}
+                </span>
               ))}
             </div>
           </div>
-          <div className="relative">
-            <div className="grid h-[420px] place-items-center rounded-3xl bg-gradient-to-br from-royal to-royal-2 text-center text-white shadow-soft">
-              <div>
-                <div className="mx-auto mb-4 grid h-20 w-20 place-items-center rounded-2xl bg-white/10 font-display text-3xl font-bold text-gold ring-1 ring-white/20">JB</div>
-                <div className="font-display text-2xl font-bold">Colegio Jorge Berganza</div>
-                <div className="mt-1 text-sm text-[#cdd9ef]">#EducaciónConValores · Tulancingo</div>
-              </div>
+
+          <Reveal style={{ position: "relative" }}>
+            <div style={{ boxShadow: "0 30px 70px rgba(20,33,61,.22)", borderRadius: 32 }}>
+              <Photo alt="Comunidad Jorge Berganza" radius={32} ratio="4/5" icon="GraduationCap" />
             </div>
-            <div className="absolute -left-5 -top-4 hidden animate-floaty items-center gap-2 rounded-2xl bg-white px-4 py-3 shadow-soft sm:flex">
-              <School className="h-5 w-5 text-gold" aria-hidden /><span className="font-display text-[13px] font-semibold text-royal">Ambiente seguro y cálido</span>
+            <div style={{ position: "absolute", left: -18, bottom: 34, background: "#fff", border: "1px solid var(--bd)", borderRadius: 20, padding: "18px 22px", boxShadow: "0 18px 48px rgba(20,33,61,.16)", maxWidth: 230 }}>
+              <div style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: 34, color: "var(--green-d)", lineHeight: 1 }}>+20</div>
+              <div style={{ fontSize: 13, color: "var(--ink-600)", fontWeight: 600, marginTop: 2 }}>años de tradición en Tulancingo</div>
             </div>
-          </div>
+            <div style={{ position: "absolute", right: -14, top: 26, background: "var(--ink)", color: "#fff", borderRadius: 16, padding: "13px 17px", boxShadow: "0 14px 34px rgba(20,33,61,.25)", display: "flex", alignItems: "center", gap: 10 }}>
+              <Icon name="HeartHandshake" size={22} style={{ color: "var(--gold)" }} />
+              <div><div style={{ fontWeight: 800, fontSize: 14, lineHeight: 1.1 }}>Ambiente</div><div style={{ fontSize: 12, color: "#aab6c8" }}>seguro y cálido</div></div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      <StatsBar items={[
-        { n: "3", l: "Niveles educativos" },
-        { n: "100%", l: "Validez oficial SEP" },
-        { n: "+20", l: "Años formando" },
-        { n: "JB", l: "Comunidad con valores" },
-      ]} />
-
-      <section className="py-20 md:py-24">
-        <div className="wrap">
-          <SectionHead center kicker="Modelo educativo" title="Un camino completo para tu hijo" sub="Acompañamos cada etapa con un proyecto educativo coherente y centrado en la persona." />
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {niveles.map((n) => {
-              const Icon = n.icon;
-              return (
-                <Link key={n.t} href={n.href} className="group rounded-xl2 border border-line bg-white p-7 transition hover:-translate-y-1.5 hover:border-[#c7d6f3] hover:shadow-soft">
-                  <div className="mb-4 grid h-14 w-14 place-items-center rounded-[15px] bg-gradient-to-br from-royal to-royal-2 text-white"><Icon className="h-7 w-7" strokeWidth={1.75} aria-hidden /></div>
-                  <h3 className="font-display text-[19px] font-semibold text-royal">{n.t}</h3>
-                  <p className="mt-2 text-[14.5px] text-muted">{n.d}</p>
-                  <span className="mt-3 inline-block text-[13.5px] font-semibold text-royal group-hover:underline">Conocer más →</span>
-                </Link>
-              );
-            })}
-          </div>
+      {/* STATS */}
+      <section style={{ background: "var(--ink)" }}>
+        <div className="wrap" style={{ paddingTop: "clamp(34px,4vw,52px)", paddingBottom: "clamp(34px,4vw,52px)", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(150px,1fr))", gap: 28 }}>
+          {STATS.map((s) => (
+            <div key={s.label} style={{ textAlign: "center" }}>
+              <div style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(30px,4vw,46px)", color: "#fff", lineHeight: 1 }}>{s.value}</div>
+              <div style={{ color: "#aab6c8", fontSize: 14, fontWeight: 500, marginTop: 6, maxWidth: 180, marginInline: "auto" }}>{s.label}</div>
+            </div>
+          ))}
         </div>
       </section>
 
-      <section className="bg-bg-2 py-20 md:py-24">
-        <div className="wrap">
-          <SectionHead center kicker="Por qué elegirnos" title="Formamos para la vida, no solo para el examen" sub="Nuestros programas utilizan las mejores prácticas educativas, centradas en cada estudiante." />
-          <div className="grid gap-6 md:grid-cols-3">
-            {pilares.map((p) => {
-              const Icon = p.icon;
-              return (
-                <div key={p.t} className="rounded-xl2 border border-line bg-white p-8">
-                  <div className="mb-4 grid h-14 w-14 place-items-center rounded-[15px] bg-gold-soft text-gold"><Icon className="h-7 w-7" strokeWidth={1.75} aria-hidden /></div>
-                  <h3 className="font-display text-[19px] font-semibold text-royal">{p.t}</h3>
-                  <p className="mt-2 text-[14.5px] text-muted">{p.d}</p>
+      {/* PILARES */}
+      <section className="wrap section">
+        <SectionHead eyebrow="Por qué Jorge Berganza" title="Un colegio que forma personas, no solo alumnos" sub="Tres pilares que distinguen la experiencia educativa de nuestra familia JB." />
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 24, marginTop: 44 }}>
+          {PILLARS.map((p, i) => (
+            <Reveal key={p.title} className="card card-hover">
+              <div className={i === 1 ? "icon-chip-green" : "icon-chip"}><Icon name={p.icon as any} size={28} /></div>
+              <h3 className="h3" style={{ fontSize: 22, marginTop: 20 }}>{p.title}</h3>
+              <p style={{ color: "var(--ink-600)", marginTop: 10, fontSize: 15.5 }}>{p.desc}</p>
+            </Reveal>
+          ))}
+        </div>
+        <Reveal style={{ marginTop: 34 }}>
+          <Link href="/nuestra-esencia" className="link-arrow">Conoce nuestra esencia<Icon name="ArrowRight" size={18} /></Link>
+        </Reveal>
+      </section>
+
+      {/* NIVELES preview */}
+      <section className="band-bg2">
+        <div className="wrap section">
+          <SectionHead eyebrow="Niveles educativos" title="Acompañamos cada etapa de tu hijo" sub="Preescolar, primaria y secundaria, además de actividades extra académicas." />
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 24, marginTop: 44 }}>
+            {NIVELES.map((n) => (
+              <Reveal key={n.title} className="card-hover" style={{ background: "var(--surface)", border: "1px solid var(--bd)", borderRadius: 22, overflow: "hidden", boxShadow: "0 2px 6px rgba(20,33,61,.05)" }}>
+                <Photo src={n.img} alt={n.title} radius={0} ratio="1/1" icon={n.icon as any} />
+                <div style={{ padding: 22 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                    <span style={{ color: "var(--green-d)", display: "flex" }}><Icon name={n.icon as any} size={22} /></span>
+                    <h3 className="h3" style={{ fontSize: 18 }}>{n.title}</h3>
+                  </div>
+                  <p style={{ color: "var(--ink-600)", marginTop: 8, fontSize: 14 }}>{n.desc}</p>
                 </div>
-              );
-            })}
+              </Reveal>
+            ))}
           </div>
-          <div className="mt-10 text-center"><Link href="/nuestra-esencia" className="font-semibold text-royal hover:underline">Conoce nuestra esencia →</Link></div>
+          <Reveal style={{ marginTop: 34, textAlign: "center" }}>
+            <Link href="/niveles" className="link-arrow" style={{ justifyContent: "center" }}>Ver todos los niveles<Icon name="ArrowRight" size={18} /></Link>
+          </Reveal>
         </div>
       </section>
 
-      <CtaBand title="Inscripciones y reinscripciones abiertas" sub="Agenda una visita guiada y conoce por qué somos una familia educativa con tradición en Tulancingo." href={WA_VISITA} label="Agendar una visita" />
+      {/* TESTIMONIO */}
+      <section className="wrap section">
+        <SectionHead center eyebrow="Comunidad JB" title="Familias que ya son parte de la familia" />
+        <Reveal style={{ maxWidth: 820, margin: "44px auto 0", background: "var(--ink)", borderRadius: 28, padding: "clamp(32px,5vw,56px)", position: "relative", overflow: "hidden" }}>
+          <div style={{ position: "absolute", top: -30, left: 30, fontFamily: "var(--font-spectral), Georgia, serif", fontStyle: "italic", fontSize: 180, color: "rgba(214,169,59,.18)", lineHeight: 1 }}>“</div>
+          <p style={{ position: "relative", fontFamily: "var(--font-spectral), Georgia, serif", fontStyle: "italic", fontSize: "clamp(20px,2.4vw,28px)", color: "#fff", lineHeight: 1.4, margin: 0 }}>
+            {tst.text}
+          </p>
+          <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: 28 }}>
+            <div style={{ width: 52, height: 52, borderRadius: "50%", background: "var(--gold)", color: "var(--ink)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontFamily: "var(--font-display)", fontSize: 16 }}>{tst.ini}</div>
+            <div><div style={{ color: "#fff", fontWeight: 700 }}>{tst.name}</div><div style={{ color: "#aab6c8", fontSize: 14 }}>{tst.role}</div></div>
+            <div style={{ marginLeft: "auto", color: "var(--gold)", fontSize: 18, letterSpacing: 2 }}>★★★★★</div>
+          </div>
+        </Reveal>
+        <Reveal style={{ marginTop: 28, textAlign: "center" }}>
+          <Link href="/comunidad" className="link-arrow" style={{ justifyContent: "center" }}>Ver más de la comunidad<Icon name="ArrowRight" size={18} /></Link>
+        </Reveal>
+      </section>
+
+      {/* FAQ */}
+      <section className="wrap-narrow section">
+        <SectionHead center eyebrow="Preguntas frecuentes" title="Resuelve tus dudas antes de inscribir" />
+        <Faq />
+      </section>
+
+      <CtaBand title="Conoce la familia Jorge Berganza" sub="Agenda una visita y siente el ambiente cálido que nos distingue. Te esperamos." variant="ink" primary="informes" />
     </main>
   );
 }

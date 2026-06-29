@@ -1,20 +1,26 @@
 import type { Config } from "tailwindcss";
+
 const config: Config = {
-  content: ["./app/**/*.{js,ts,jsx,tsx,mdx}", "./components/**/*.{js,ts,jsx,tsx,mdx}"],
+  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        royal: "#1e3a8f", "royal-2": "#15296b", "royal-soft": "#eaf0fb",
-        gold: "#d6a93b", "gold-soft": "#f6edd7",
-        ink: "#1f2937", muted: "#5b6b7e",
-        bg: "#ffffff", "bg-2": "#f5f8fd", line: "#e6edf6",
+        blue: { DEFAULT: "#1E3A8F", d: "#15296B", dd: "#102050", 50: "#EAF0FB", 100: "#D4E0F6" },
+        green: { DEFAULT: "#C8941F", d: "#A7791A", dd: "#7E5A12", 50: "#F8EFD7", 100: "#EFDCA9" },
+        ink: { DEFAULT: "#14213D", 800: "#1B2C52", 700: "#2B3A57", 600: "#44506B", 500: "#6A7790", 300: "#AAB6C8" },
+        bd: "#DCE4F1",
+        bd2: "#E7EDF7",
+        bg: "#F7F9FD",
+        bg2: "#EDF2FB",
+        surface: "#FFFFFF",
+        gold: "#D6A93B",
+        wa: "#1FA855",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        display: ["var(--font-poppins)", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "system-ui", "sans-serif"],
+        serif: ["var(--font-spectral)", "Georgia", "serif"],
+        sans: ["var(--font-hanken)", "system-ui", "sans-serif"],
       },
-      boxShadow: { soft: "0 18px 50px rgba(21,41,107,.14)" },
-      borderRadius: { xl2: "16px" },
     },
   },
   plugins: [],
